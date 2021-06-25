@@ -1,6 +1,22 @@
-import React from 'react';
+import React, { useState } from 'react';
 
 const Formulario = () => {
+
+    const [busqueda, guardarBusqueda] = useState({
+        artista:'',
+        cancion:''
+    });
+
+    const {artista, cancion} = busqueda
+
+    //Funcion a cada input para leer su contenido
+    const actualizarState = e => {
+        guardarBusqueda({
+            ...busqueda,
+            [e.target.name] : e.target.value
+        })
+    }
+
     return ( 
         <div className="bg-info">
             <div className="container">
@@ -19,6 +35,8 @@ const Formulario = () => {
                                         className="form-control"
                                         name="artista"
                                         placeholder="Nombre Artista"
+                                        onChange={actualizarState}
+                                        value= {artista}
                                     />
                                 </div>
                             </div>
@@ -30,6 +48,8 @@ const Formulario = () => {
                                         className="form-control"
                                         name="cancion"
                                         placeholder="Nombre Canción"
+                                        onChange={actualizarState}
+                                        value={cancion}
                                     />
                                 </div>
                             </div>
