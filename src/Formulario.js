@@ -1,11 +1,12 @@
 import React, { useState } from 'react';
 
-const Formulario = () => {
+const Formulario = ({guardarBusquedaletra}) => {
 
     const [busqueda, guardarBusqueda] = useState({
         artista:'',
         cancion:''
     });
+    const [error, guardarError] = useState(false);
 
     const {artista, cancion} = busqueda
 
@@ -17,11 +18,27 @@ const Formulario = () => {
         })
     }
 
+    //Consultar las APIS
+
+    const buscarInformacion = e => {
+        e.preventDefault();
+
+        if(artista.trim() === '' || cancion.trim() === ''){
+            guardarError(true);
+            return;
+        }
+        guardarError(false);
+        //Todo bien, pasar al componente principal
+        guardarBusquedaletra(busqueda);
+    }
+
     return ( 
         <div className="bg-info">
+                { error ? <p className="alert alert-danger text-center p-2">Todos los campos deben ser completados</p> : null}
             <div className="container">
                 <div className="row">
                     <form
+                    onSubmit={buscarInformacion}
                     className="col card text-white bg-transparent mb-5 pt-5 pb-2"
                     >
                     <fieldset>
